@@ -10,10 +10,10 @@ def index():
     '''
 
     sources = get_sources()
-    return render_template('index.html', sources = sources)
+    return render_template('.html', sources = sources)
     
 
 @main.route('/articles/<source_id>')
 def articles(source_id):
     articles = get_articles(source_id)
-    return render_template('article.html', articles=articles)
+    return render_template('.html', articles=articles)
