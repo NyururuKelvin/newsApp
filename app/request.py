@@ -89,3 +89,18 @@ def process_article(articles_list):
             articles_data.append(new_article)
 
     return articles_data
+
+def search_for_article(article):
+    search_article_url=search_url.format(article,api_key)
+
+    with urllib.request.urlopen(search_article_url) as url:
+        search_data=url.read()
+        search_json=json.loads(search_data)
+
+        search_article=None
+
+        if search_json['articles']:
+            searches=search_json['articles']
+            search_article=process_article(searches)
+
+    return search_article
