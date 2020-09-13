@@ -19,7 +19,7 @@ def configure_request(app):
     sources_url=app.config['SOURCE_API_URL']
     search_url=app.config['SEARCH_SOURCES']
 
-def get_source():
+def get_sources():
     '''
     Function that gets the json response from our url request
     '''
@@ -37,7 +37,7 @@ def get_source():
 
     return source_results
 
-def process_sources(sources_list):
+def process_results(sources_list):
     '''
     Function  that processes the sources result and transforms them to a list of Objects
     '''
@@ -54,20 +54,38 @@ def process_sources(sources_list):
 
     return source_results
 
-def get_articles(source_id):
-    get_articles_url = base_url_article.format(source_id, api_key)
-    res = requests.get(get_articles_url)
-    articles_data = res.json().get('articles')
+def get_article(source_id):
+    get_highlights_url=highlights_url.format(api_key)
 
-    return process_articles(articles_data)
+    with urllib.request.urlopen(get_highlights_url) as url:
+        get_data=url.read()
+        get_json_data=json.loads(get_data)
 
-def process_articles(articles_list):
+        articles_data=None
+
+        if get_json_data['articles']:
+            articles_list=get_json_data['articles']
+            articles_data=process_article(articles_list)
+        
+    return articles_data
+
+def process_article(articles_list):
     '''
     Function  that processes the sources result and transform them to a list of Objects according to objects
     '''
-    articles = []
-    if articles_list:
-        for article in articles_list:
-            # article = Article(article['id'], article['name'], article['author'], article['title'], article['description'], article['url'], article['urlToImage'], article['publishedAt'], article['content'])
-            articles.append(article)
-        return articles
+    articles_data=[]
+
+    for article in articles_list:
+        id=article.get('id')
+        name=article.get('name')
+        urlToImage=article.get('urlToImage')
+        description=article.get('description')
+        publishedAt=article.get('publishedAt')
+        url=article.get('url')
+        title=article.get('title')
+        source=article.get('source')
+        if description:
+            new_article=Article(id,name,urlToImage,description,title,url,publishedAt,source)
+            articles_data.append(new_article)
+
+    return articles_data
