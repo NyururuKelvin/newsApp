@@ -4,45 +4,55 @@ import requests
 
 # Getting api key
 api_key = None
-# Getting the news base url
-base_url = None
-# Getting the articles base url
-base_url_article = None
+
+# Getting base urls
+highlights_url=None
+sources_url=None
+search_url=None
+
 
 def configure_request(app):
-    global api_key,base_url,base_url_article
-    api_key = app.config['NEWS_API_KEY']
-    base_url = app.config['NEWS_API_BASE_URL']
-    base_url_article = app.config['ARTICLES_API_BASE_URL']
+    global api_key,highlights_url,sources_url,search_url
 
-def get_sources():
+    api_key = app.config['NEWS_API_KEY']
+    highlights_url=app.config['HEADLINES_API_URL']
+    sources_url=app.config['SOURCE_API_URL']
+    search_url=app.config['SEARCH_SOURCES']
+
+def get_source():
     '''
     Function that gets the json response from our url request
     '''
-    get_source_url = base_url.format(api_key)
-    res = requests.get(get_source_url)
-    data = res.json().get('sources')
-    return process_sources(data)
+    source_api_url=sources_url.format(api_key)
+
+    with urllib.request.urlopen(source_api_url) as url:
+        unread_data=url.read()
+        read_json=json.loads(unread_data)
+
+        source_results=None
+
+        if read_json['sources']:
+            sources_list=read_json['sources']
+            source_results=process_results(sources_list)
+
+    return source_results
 
 def process_sources(sources_list):
     '''
     Function  that processes the sources result and transforms them to a list of Objects
     '''
     sources_results = []
-    for source_item in sources_list:
-        id = source_item.get('id')
-        name = source_item.get('name')
-        description = source_item.get('description')
-        url = source_item.get('url')
-        category = source_item.get('category')
-        language = source_item.get('language')
-        county = source_item.get('country')
+    for sources in source_list:
+        id=sources.get('id')
+        name=sources.get('name')
+        description=sources.get('description')
+        url=sources.get('url')
         
-        if url:
-            sources_object = Source(id, name, description, url, category, language, county)
-            sources_results.append(sources_object)
-        
-    return sources_results
+        if description:
+            new_source=Source(id,name,description,url)
+            source_results.append(new_source)
+
+    return source_results
 
 def get_articles(source_id):
     get_articles_url = base_url_article.format(source_id, api_key)
