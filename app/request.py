@@ -41,8 +41,8 @@ def process_results(sources_list):
     '''
     Function  that processes the sources result and transforms them to a list of Objects
     '''
-    sources_results = []
-    for sources in source_list:
+    source_results = []
+    for sources in sources_list:
         id=sources.get('id')
         name=sources.get('name')
         description=sources.get('description')
