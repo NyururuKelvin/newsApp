@@ -6,7 +6,7 @@ from ..request import get_sources, get_article,search_for_article
 @main.route('/')
 def index():
     # articles=get_article(source_id)
-    articles=get_article()
+    articles=get_article('source_id')
     sport=search_for_article('sports')
     business=search_for_article('business')
     sources=get_sources()
