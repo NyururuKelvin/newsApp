@@ -6,7 +6,7 @@ class Config:
     SOURCE_API_URL='https://newsapi.org/v2/sources?apiKey={}'
     SEARCH_SOURCES='https://newsapi.org/v2/everything?q={}&apiKey={}'
     NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
-    # SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 class ProdConfig(Config):
