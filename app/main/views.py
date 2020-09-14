@@ -6,6 +6,7 @@ from ..request import get_sources, get_article,search_for_article
 @main.route('/')
 def index():
     # articles=get_article(source_id)
+    articles=get_article('source_id')
     sport=search_for_article('sports')
     business=search_for_article('business')
     sources=get_sources()
@@ -16,7 +17,7 @@ def index():
     if search:
         return redirect(url_for('main.search',article_name=search))
     else:
-        return render_template('index.html',sports=sport,business=business,sources=sources)
+        return render_template('index.html',articles=articles,sports=sport,business=business,sources=sources)
     
 
 @main.route('/sports')
