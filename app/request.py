@@ -54,7 +54,7 @@ def process_results(sources_list):
 
     return source_results
 
-def get_article(source_id):
+def get_article():
     get_highlights_url=highlights_url.format(api_key)
 
     with urllib.request.urlopen(get_highlights_url) as url:
