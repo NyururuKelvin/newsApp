@@ -15,7 +15,7 @@ def index():
     search=request.args.get('search_name')
 
     if search:
-        return redirect(url_for('main.search',article_name=search))
+        return redirect(url_for('.search',article_name=search))
     else:
         return render_template('index.html',articles=articles,sports=sport,business=business,sources=sources)
     
@@ -25,7 +25,7 @@ def sources():
     sport=search_for_article('sports')
     search=request.args.get('search_name')
     if search:
-        return redirect(url_for('main.search',article_name=search))
+        return redirect(url_for('.search',article_name=search))
     else:
         return render_template('sports.html',sports=sport)
 
@@ -34,7 +34,7 @@ def business():
     business=search_for_article('business')
     search=request.args.get('search_name')
     if search:
-        return redirect(url_for('main.search',article_name=search))
+        return redirect(url_for('.search',article_name=search))
     else:
         return render_template('business.html',business=business)
 
