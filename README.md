@@ -21,7 +21,7 @@ The live link to the project is provided below.
 [https://git.heroku.com/nyururu-newsglobal.git]
 
 
-https://git.heroku.com/nyururu-newsglobal.git
+https://nyururu-newsglobal.herokuapp.com/
 
 
 ## Contributing
