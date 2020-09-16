@@ -18,7 +18,7 @@ The project is created with:
 ## Setup
 To run this project, use the live link in the GitHub repo:
 The live link to the project is provided below.
-[https://git.heroku.com/nyururu-newsglobal.git]
+[https://nyururu-newsglobal.herokuapp.com/]
 
 
 https://nyururu-newsglobal.herokuapp.com/
